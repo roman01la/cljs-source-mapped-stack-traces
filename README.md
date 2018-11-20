@@ -2,6 +2,12 @@
 
 **Works only in Chrome**
 
+## Limitations
+
+- Not guaranteed to work 😜
+- Links to source code in browser's console are not interactive
+- No async stack traces
+
 ## Try
 
 Enable Custom Formatters in Chrome ([see how](http://www.mattzeunert.com/2016/02/19/custom-chrome-devtools-object-formatters.html))
