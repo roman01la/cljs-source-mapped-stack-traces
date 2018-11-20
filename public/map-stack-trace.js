@@ -1,4 +1,4 @@
-const worker = new Worker("/map-stack-trace.worker.js");
+const worker = new Worker("map-stack-trace.worker.js");
 
 let onError;
 

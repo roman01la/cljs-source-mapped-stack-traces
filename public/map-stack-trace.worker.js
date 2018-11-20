@@ -1,7 +1,7 @@
-importScripts("/source-map.js");
+importScripts("source-map.js");
 
 sourceMap.SourceMapConsumer.initialize({
-  "lib/mappings.wasm": "/mappings.wasm"
+  "lib/mappings.wasm": "mappings.wasm"
 });
 
 self.onmessage = event => mapStackTrace(event.data);
