@@ -1,0 +1,6 @@
+{:main test.core
+ :optimizations :none
+ :output-to "public/main.js"
+ :output-dir "public/out"
+ :asset-path "out"
+ :source-map true}
