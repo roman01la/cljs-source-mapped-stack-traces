@@ -41,6 +41,7 @@ async function _mapStackTrace(
     if (!consumer.file.endsWith(".js.map")) {
       frame.source = smPath.replace(/\.js\.map$/, ".cljs");
     }
+    frame._source = frame.source;
     frame.source = path.join(publicDir, frame.source);
     return frame;
   });
@@ -60,7 +61,7 @@ async function _mapStackTrace(
     const enrichedFrame = {
       column: frame.column,
       line: frame.line,
-      source: frame.source,
+      source: frame._source,
       name: capturedLines
     };
 
