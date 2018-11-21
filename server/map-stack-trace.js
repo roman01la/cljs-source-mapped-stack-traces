@@ -31,18 +31,28 @@ async function _mapStackTrace(
   linesInFrame,
   { publicDir }
 ) {
-  const absFilePath = path.join(publicDir, file.match(/^http:\/\/.*\/(.*)/)[1]);
+  const absFilePath = path.join(
+    publicDir,
+    file
+      .split("/")
+      .slice(3)
+      .join("/")
+  );
   const fileContents = fs.readFileSync(absFilePath, "utf8");
   const smPath = getSourceMapPath({ source: fileContents, file: absFilePath });
   const sm = JSON.parse(fs.readFileSync(smPath, "utf8"));
 
   const frame = await SourceMapConsumer.with(sm, null, consumer => {
     const frame = consumer.originalPositionFor({ line, column });
+    frame._source = frame.source;
     if (!consumer.file.endsWith(".js.map")) {
       frame.source = smPath.replace(/\.js\.map$/, ".cljs");
+      frame._source = frame.source.replace(publicDir, "");
+    } else {
+      frame._source = frame.source;
+      frame.source = path.join(publicDir, frame.source);
     }
-    frame._source = frame.source;
-    frame.source = path.join(publicDir, frame.source);
+
     return frame;
   });
 
