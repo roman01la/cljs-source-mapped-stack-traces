@@ -17,13 +17,19 @@ Serve from `public` dir and open browser console
 ## Build
 
 ```
-clj -m cljs.main -co build.edn -c test.core
+clj -m cljs.main -co prod.cljs.edn -c test.core
 ```
 
 or
 
 ```
-clj -m cljs.main -co dev.edn -c test.core
+clj -m cljs.main -co dev.cljs.edn -c test.core
+```
+
+or
+
+```
+clj -m figwheel.main -b dev -r
 ```
 
 ## How to use

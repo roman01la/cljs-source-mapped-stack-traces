@@ -50,8 +50,11 @@ server.get("/runtime", (req, res) => {
 
 server.post("/map-stack-trace", cors, async (req, res) => {
   const data = await mapStackTrace(req.body.data, {
-    publicDir: "/Users/romanliutikov/projects/source-map-stack-trace/public"
+    publicDir:
+      "/Users/romanliutikov/projects/source-map-stack-trace/resources/public"
   });
+
+  console.log(data);
 
   res.json({ data });
 });

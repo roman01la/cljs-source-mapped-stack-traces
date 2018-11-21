@@ -37,6 +37,7 @@ async function _mapStackTrace(
       .split("/")
       .slice(3)
       .join("/")
+      .replace(/\?.*$/, "")
   );
   const fileContents = fs.readFileSync(absFilePath, "utf8");
   const smPath = getSourceMapPath({ source: fileContents, file: absFilePath });

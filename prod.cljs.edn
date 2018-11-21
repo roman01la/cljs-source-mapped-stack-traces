@@ -1,0 +1,5 @@
+{:main test.core
+ :optimizations :advanced
+ :output-to "resources/public/main.js"
+ :output-dir "resources/public/out"
+ :source-map "resources/public/main.js.map"}

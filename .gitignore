@@ -1,2 +1,3 @@
 .cpcache
 node_modules
+resources/public/out

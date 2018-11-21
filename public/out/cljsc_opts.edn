@@ -1,1 +1,0 @@
-{:main test.core, :optimizations :advanced, :output-to "public/main.js", :output-dir "public/out", :source-map "public/main.js.map", :aot-cache true}
