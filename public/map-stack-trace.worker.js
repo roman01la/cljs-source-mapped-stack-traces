@@ -6,6 +6,19 @@ sourceMap.SourceMapConsumer.initialize({
 
 self.onmessage = event => mapStackTrace(event.data);
 
+const cfetch = (() => {
+  let _cache = new Map();
+  return {
+    clearCache: () => _cache.clear(),
+    fetch: (url, type) => {
+      if (!_cache.has(url)) {
+        _cache.set(url, fetch(url).then(r => r.json()));
+      }
+      return _cache.get(url);
+    }
+  };
+})();
+
 function getSourceMapPath({ source, file }) {
   const ret = source.match(/sourceMappingURL=(.*)/);
 
@@ -36,9 +49,8 @@ function _mapStackTrace({ file, line, column }, excludes, linesInFrame) {
     .then(source => getSourceMapPath({ source, file }))
     .then(path => {
       filePath = path.replace(/\.js\.map$/, ".cljs");
-      return fetch(path);
+      return cfetch.fetch(path, "json");
     })
-    .then(r => r.json())
     .then(sm =>
       sourceMap.SourceMapConsumer.with(sm, null, consumer => {
         const frame = consumer.originalPositionFor({ line, column });
@@ -84,6 +96,8 @@ function mapStackTrace({ message, stack, excludes = [], linesInFrame = 3 }) {
   const [, ...frames] = stack.split("\n");
   const parsedFrames = frames.map(parseStackFrame);
   const _excludes = excludes.map(regex => new RegExp(regex));
+
+  cfetch.clearCache();
 
   Promise.all(
     parsedFrames.map(frame => _mapStackTrace(frame, _excludes, linesInFrame))
