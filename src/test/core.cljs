@@ -16,9 +16,9 @@
     (then #(nth % 3))
     (then println))
 
-(js/setTimeout
- #(throw (js/Error. "hello"))
- 2500)
+; (js/setTimeout
+;  #(throw (js/Error. "hello"))
+;  2500)
 
 
 ;; hello

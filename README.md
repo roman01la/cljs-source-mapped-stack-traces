@@ -1,4 +1,10 @@
+## DevTools Console
+
 <img src="screenshot.png" />
+
+## Figwheel
+
+<img src="figwheel.png" />
 
 **Works only in Chrome**
 
