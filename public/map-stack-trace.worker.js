@@ -12,7 +12,18 @@ const cfetch = (() => {
     clearCache: () => _cache.clear(),
     fetch: (url, type) => {
       if (!_cache.has(url)) {
-        _cache.set(url, fetch(url).then(r => r.json()));
+        _cache.set(
+          url,
+          fetch(url).then(r => {
+            if (type === "json") {
+              return r.json();
+            }
+            if (type === "text") {
+              return r.text();
+            }
+            return r;
+          })
+        );
       }
       return _cache.get(url);
     }
@@ -44,8 +55,8 @@ function parseStackFrame(frame) {
 
 function _mapStackTrace({ file, line, column }, excludes, linesInFrame) {
   let filePath;
-  return fetch(file)
-    .then(r => r.text())
+  return cfetch
+    .fetch(file, "text")
     .then(source => getSourceMapPath({ source, file }))
     .then(path => {
       filePath = path.replace(/\.js\.map$/, ".cljs");
@@ -68,8 +79,8 @@ function _mapStackTrace({ file, line, column }, excludes, linesInFrame) {
           ? true
           : excludes.some(regex => !regex.test(frame.source));
       if (shouldInclude) {
-        return fetch(frame.source)
-          .then(r => r.text())
+        return cfetch
+          .fetch(frame.source, "text")
           .then(file => ({ source: frame.source, file, frame }));
       }
     })
@@ -97,6 +108,8 @@ function mapStackTrace({ message, stack, excludes = [], linesInFrame = 3 }) {
   const parsedFrames = frames.map(parseStackFrame);
   const _excludes = excludes.map(regex => new RegExp(regex));
 
+  // I usually have caching tunred off in Chrome for development
+  // so perhaps use this with Figwheel on reload to get changed files and sourcec maps
   cfetch.clearCache();
 
   Promise.all(
