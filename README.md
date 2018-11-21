@@ -42,3 +42,9 @@ See bootstrapping code in [public/index.html](public/index.html)
     mode: "expanded" // "simple" | "expanded" (see screenshot in the beginning of the document)
 }
 ```
+
+## Using dev server to offload browser process
+
+1. Install NPM deps
+2. Run `node server/index.js --port {PORT}`
+3. Add this script to your HTML `<script src="http://localhost:{PORT}/runtime"></script>` to connect to server
