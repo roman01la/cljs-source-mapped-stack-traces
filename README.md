@@ -34,7 +34,8 @@ clj -m figwheel.main -b dev -r
 
 ## How to use
 
-See bootstrapping code in [public/index.html](public/index.html)
+- See bootstrapping code in [src/test/preload.cljs](src/test/preload.cljs) after line 46
+- Or add `:preloads [test.preload]` to compiler options
 
 ## Options
 

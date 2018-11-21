@@ -17,5 +17,8 @@
     (then println))
 
 (js/setTimeout
- #(throw (js/Error. 1))
+ #(throw (js/Error. "hello"))
  2500)
+
+
+;; hello

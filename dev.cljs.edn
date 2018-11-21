@@ -3,4 +3,5 @@
  :output-to "resources/public/main.js"
  :output-dir "resources/public/out"
  :asset-path "out"
- :source-map true}
+ :source-map true
+ :preloads [test.preload]}

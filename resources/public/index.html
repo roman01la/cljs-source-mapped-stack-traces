@@ -9,46 +9,6 @@
     <p>open browser console</p>
     <script src="stack-trace-formatter.js"></script>
     <script src="http://localhost:5555/runtime"></script>
-
-    <script>
-      // catch Promise errors
-      window.addEventListener("unhandledrejection", event => {
-        if (event.reason instanceof Error === false) {
-          return;
-        }
-        mapStackTrace({
-          message: event.reason.message,
-          stack: event.reason.stack,
-          linesInFrame: 3, // only odd? numbers, so target line can be always in the middle
-          maxLines: 10,
-          excludes: [], // [".*\/cljs\/core.cljs$"]
-          mode: "expanded" // "simple" | "expanded"
-        });
-
-        // do not display default printing
-        event.preventDefault();
-      });
-
-      // catch all other errors
-      window.addEventListener("error", event => {
-        if (event.error instanceof Error === false) {
-          return;
-        }
-        mapStackTrace({
-          message: event.error.message,
-          stack: event.error.stack,
-          linesInFrame: 3, // only odd? numbers, so target line can be always in the middle
-          maxLines: 10,
-          excludes: [], // [".*\/cljs\/core.cljs$"]
-          mode: "simple" // "simple" | "expanded"
-        });
-
-        // do not display default printing
-        event.preventDefault();
-      });
-      onMappedError(error => console.error(error));
-    </script>
-
     <script src="main.js"></script>
   </body>
 </html>
